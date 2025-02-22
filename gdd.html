@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>GDD Files</title>
+    <link rel="stylesheet" href="gdd.css"> <!-- Updated to use gdd.css -->
+</head>
+<body class="gdd-page loading">
+    <div class="container">
+        <h1>GDD Files</h1>
+        <div class="button-container">
+            <a href="index.html" class="button">Back to First Page</a>
+        </div>
+        <div class="info-box">
+            <p>This section is currently a work in progress. I’m in the process of documenting my game designs and will be updating this page soon. Stay tuned for more details!</p>
+        </div>
+    </div>
+    <script>
+        document.addEventListener("DOMContentLoaded", () => {
+            document.body.classList.remove("loading");
+
+            const links = document.querySelectorAll("a");
+            links.forEach(link => {
+                link.addEventListener("click", event => {
+                    event.preventDefault();
+                    const href = link.getAttribute("href");
+
+                    document.body.classList.add("fade-out");
+
+                    setTimeout(() => {
+                        window.location.href = href;
+                    }, 1000); // Match the fade-out animation duration
+                });
+            });
+        });
+    </script>
+</body>
+</html>

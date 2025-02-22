@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Research</title>
+    <link rel="stylesheet" href="research.css"> <!-- Updated to use research.css -->
+</head>
+<body class="research-page loading">
+    <div class="container">
+        <h1>Research</h1>
+        <div class="button-container">
+            <a href="index.html" class="button">Back to First Page</a>
+        </div>
+
+        <!-- Machine Learning AI for Combat Games Section -->
+        <div class="research-section">
+            <h2>Machine Learning AI for Combat Games</h2>
+            <p><strong>1) Objective</strong><br>
+                Developing an AI that uses reinforcement learning to adapt and counter player combat strategies.
+            </p>
+            <p><strong>2) Research/Trials</strong><br>
+                Used PyTorch to create a reward-based learning system for enemy AI.<br>
+                Fed the AI a selection of pictures representing patterns like:
+            </p>
+            <ul>
+                <li>Cover</li>
+                <li>Flanking</li>
+                <li>Retreat</li>
+                <li>Flush-out</li>
+            </ul>
+            <p>
+                Unfortunately, the pictures fed weren’t in equal quantities, causing the AI to become biased towards recognizing the "cover" pattern exclusively.
+            </p>
+            <p><strong>3) Status</strong><br>
+                Failed
+            </p>
+            <p><strong>4) Reflection</strong><br>
+                While the AI successfully recognized the "cover" pattern, it failed to recognize other patterns.<br>
+                Movement implementation could not proceed due to the bias issue.<br>
+                Additionally, the computational costs were too high for my current hardware setup.
+            </p>
+        </div>
+
+        <!-- Custom Game Engine Section -->
+        <div class="research-section">
+            <h2>Custom Game Engine</h2>
+            <p><strong>1) Objective</strong><br>
+                Develop a rough early concept of a Custom Game Engine.
+            </p>
+            <p><strong>2) Research/Trials</strong><br>
+                Currently reading through <em>Game Engine Architecture</em> by Jason Gregory to gain foundational insights into building an engine.
+            </p>
+            <p><strong>3) Status</strong><br>
+                Ongoing
+            </p>
+            <p><strong>4) Reflection</strong><br>
+                <em>(Working on it )</em>
+            </p>
+        </div>
+    </div>
+    <script>
+        document.addEventListener("DOMContentLoaded", () => {
+            document.body.classList.remove("loading");
+
+            const links = document.querySelectorAll("a");
+            links.forEach(link => {
+                link.addEventListener("click", event => {
+                    event.preventDefault();
+                    const href = link.getAttribute("href");
+
+                    document.body.classList.add("fade-out");
+
+                    setTimeout(() => {
+                        window.location.href = href;
+                    }, 1000); // Match the fade-out animation duration
+                });
+            });
+        });
+    </script>
+</body>
+</html>

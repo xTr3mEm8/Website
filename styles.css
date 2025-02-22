@@ -1,0 +1,365 @@
+/* General styles */
+html {
+    background-color: black; /* Persistent black background to prevent white flash */
+    overflow-y: scroll; /* Ensure vertical scrolling is always enabled */
+}
+
+body.loading {
+    background-color: black; /* Ensure consistent background during loading */
+    opacity: 0; /* Invisible during loading */
+}
+
+body {
+    margin: 0;
+    padding: 0;
+    padding-bottom: 40px; /* Adds space at the bottom of each page */
+    color: white;
+    font-family: Arial, sans-serif;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    align-items: center;
+    min-height: 100vh;
+    opacity: 1; /* Visible after loading */
+    animation: fadeIn 1s forwards; /* Fade-in effect */
+}
+
+/* Fade-in and fade-out animations */
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+    }
+    to {
+        opacity: 1;
+    }
+}
+
+@keyframes fadeOut {
+    from {
+        opacity: 1;
+    }
+    to {
+        opacity: 0;
+    }
+}
+
+/* Utility: Adding fade-out on link clicks */
+body.fade-out {
+    animation: fadeOut 1s forwards;
+}
+
+/* Page-specific backgrounds */
+.main-page {
+    background: url('pictures/portfolio.jpg') no-repeat center center fixed;
+    background-size: cover;
+    position: relative;
+}
+
+.games-page {
+    background: url('pictures/games.avif') no-repeat center center fixed;
+    background-size: cover;
+    position: relative;
+}
+
+.gdd-page {
+    background: url('pictures/gdd.avif') no-repeat center center fixed;
+    background-size: cover;
+    position: relative;
+}
+
+.history-page {
+    background: url('pictures/technical.jpeg') no-repeat center center fixed;
+    background-size: cover;
+    position: relative;
+}
+
+.research-page {
+    background: url('pictures/research.avif') no-repeat center center fixed;
+    background-size: cover;
+    position: relative;
+}
+
+/* Button styles */
+a {
+    text-decoration: none;
+    color: black;
+    background-color: white;
+    padding: 15px 30px;
+    border-radius: 5px;
+    font-size: 1.2em;
+    transition: background-color 0.3s, opacity 0.5s;
+}
+
+a:hover {
+    background-color: gray;
+}
+
+/* Container styles */
+.container {
+    text-align: center;
+    margin-top: 40px;
+}
+
+h1 {
+    margin-bottom: 40px;
+    font-size: 3em;
+}
+
+/* Button container styles */
+.button-container {
+    display: flex;
+    justify-content: center;
+    gap: 20px;
+}
+
+/* About Me Section */
+.about-me {
+    background-color: rgba(0, 0, 0, 0.8); /* Black background with transparency */
+    color: white;
+    padding: 20px;
+    margin-top: 40px;
+    max-width: 800px;
+    text-align: center;
+    border-radius: 10px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.5); /* Subtle shadow */
+}
+
+.about-me h2 {
+    margin-bottom: 20px;
+    font-size: 2em;
+}
+
+/* Project and History Containers */
+.project-container {
+    display: flex;
+    align-items: center;
+    margin-top: 40px;
+    position: relative;
+    gap: 20px; /* Space between description, toggle block, and arrow */
+}
+
+/* Description Section */
+.description-section {
+    background-color: rgba(0, 0, 0, 0.8); /* Black background with transparency */
+    padding: 20px;
+    border-radius: 10px;
+    max-width: 800px;
+    color: white;
+    font-size: 1.2em;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.5); /* Slightly stronger shadow */
+}
+
+.description-section ul {
+    margin-top: 10px;
+    padding-left: 20px;
+}
+
+.description-section li {
+    margin-bottom: 10px;
+}
+
+/* Toggle Block Styles */
+.toggle-block {
+    max-height: 0; /* Start fully collapsed */
+    overflow: hidden;
+    background-color: rgba(0, 0, 0, 0.8); /* Matches section background */
+    border-radius: 10px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    transition: max-height 0.5s ease-in-out, padding 0.5s ease-in-out, width 0.5s ease-in-out;
+    margin: 0 auto;
+    padding: 0; /* Remove padding when collapsed */
+    width: 0; /* Initially hidden */
+}
+
+.toggle-block.active {
+    max-height: 400px; /* Shorter height for a more rectangular shape */
+    padding: 20px;
+    width: 80%; /* Expand to full width of its container */
+    max-width: 1000px; /* Limit the maximum width of the rectangle */
+}
+
+/* Special Box for PNG */
+.image-preview {
+    width: 100%;
+    max-width: 600px; /* Adjusted width for better fit */
+    height: auto; /* Keep aspect ratio */
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: transparent; /* Fully transparent background */
+    border-radius: 10px;
+    padding: 8px; /* Reduced padding for better fit */
+    margin-left: -10px; /* Shifted 10px to the left */
+    box-shadow: none; /* Removed shadow for a cleaner look */
+}
+
+.image-preview img {
+    max-width: 100%; /* Ensure it scales properly */
+    height: auto; /* Maintain aspect ratio */
+    border-radius: 10px; /* Rounded corners */
+    object-fit: contain; /* Ensure the image fits within the box */
+}
+
+/* Arrow Toggle Styles */
+.arrow-toggle {
+    cursor: pointer;
+    font-size: 1.5em;
+    color: white;
+    background-color: darkgray;
+    padding: 10px 20px;
+    border-radius: 5px;
+    margin-left: auto; /* Pushes arrow to the right side */
+    transition: transform 0.3s ease, background-color 0.3s;
+    align-self: center; /* Aligns the arrow vertically with the description text */
+}
+
+.arrow-toggle:hover {
+    background-color: gray;
+}
+
+.arrow-toggle.active {
+    transform: translateX(150px); /* Moves arrow further to the right when active */
+}
+
+/* History Blocks */
+.bachelors-section,
+.harvard-section {
+    background-color: rgba(0, 0, 0, 0.8); /* Black background with transparency */
+    color: white;
+    padding: 20px;
+    max-width: 800px;
+    text-align: center;
+    border-radius: 10px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.5); /* Subtle shadow */
+}
+
+.bachelors-section h2,
+.harvard-section h2 {
+    margin-bottom: 20px;
+    font-size: 2em;
+}
+
+/* Projects Section */
+.projects-section {
+    background-color: rgba(0, 0, 0, 0.8); /* Black background with transparency */
+    color: white;
+    padding: 20px;
+    border-radius: 10px;
+    max-width: 800px;
+    margin: 40px auto;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.5); /* Subtle shadow */
+}
+
+.projects-section h2 {
+    margin-bottom: 20px;
+    font-size: 2em;
+    text-align: center;
+}
+
+.projects-description {
+    text-align: center;
+    margin-top: 10px;
+}
+
+.projects-description p {
+    margin-bottom: 20px;
+    font-size: 1.2em;
+    line-height: 1.5;
+}
+
+.projects-description .button {
+    display: inline-block;
+    margin-top: 10px;
+}
+
+/* History Downward Arrow */
+.arrow-toggle-down {
+    cursor: pointer;
+    font-size: 1.5em;
+    color: white;
+    background-color: darkgray;
+    padding: 10px 20px;
+    border-radius: 5px;
+    margin-top: 10px;
+    transition: background-color 0.3s;
+    text-align: center;
+}
+
+.arrow-toggle-down:hover {
+    background-color: gray;
+}
+
+/* SKVOT Section */
+.skvot-section {
+    background-color: rgba(0, 0, 0, 0.8); /* Black background with transparency */
+    color: white;
+    padding: 20px;
+    border-radius: 10px;
+    max-width: 800px;
+    margin: 40px auto;
+    text-align: center;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.5); /* Subtle shadow */
+}
+
+.skvot-section h2 {
+    margin-bottom: 20px;
+    font-size: 2em;
+}
+
+.skvot-section p {
+    font-size: 1.2em;
+    line-height: 1.5;
+}
+
+/* SKVOT Dropdown and Toggle Block */
+.skvot-toggle-block {
+    max-height: 0; /* Start fully collapsed */
+    overflow: hidden;
+    background-color: rgba(0, 0, 0, 0.8); /* Matches SKVOT section background */
+    border-radius: 10px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    transition: max-height 0.5s ease-in-out, padding 0.5s ease-in-out;
+    margin: 20px auto;
+    padding: 0; /* Remove padding when collapsed */
+    width: 100%; /* Expand to full width of its container */
+    max-width: 750px; /* Limit the maximum width */
+}
+
+.skvot-toggle-block.active {
+    max-height: 460px; /* Large enough to fit the content */
+    padding: 20px; /* Add padding when expanded */
+}
+
+/* SKVOT Image Preview */
+.skvot-image-preview img {
+    max-width: 100%;
+    height: auto; /* Maintain aspect ratio */
+    border-radius: 15px;
+    object-fit: contain; /* Ensure the image fits within the box */
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.5); /* Subtle shadow */
+}
+
+/* SKVOT Arrow Toggle Styles */
+.skvot-arrow-toggle {
+    cursor: pointer;
+    font-size: 1.5em;
+    color: white;
+    background-color: darkgray;
+    padding: 10px 20px;
+    border-radius: 5px;
+    margin-top: 10px;
+    transition: transform 0.3s ease, background-color 0.3s;
+    text-align: center;
+}
+
+.skvot-arrow-toggle:hover {
+    background-color: gray;
+}
+
+.skvot-arrow-toggle.active {
+    transform: rotate(180deg); /* Rotate the arrow when active */
+}
