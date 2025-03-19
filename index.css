@@ -1,5 +1,5 @@
 body {
-    background: url('C:/Users/User/Desktop/New Portfolio Website/backgrounds/backgrounds.jpg') no-repeat center center fixed;
+    background: url('backgrounds/backgrounds.jpg') no-repeat center center fixed;
     background-size: cover;
     position: relative;
     color: white; /* Ensures all text is white */
