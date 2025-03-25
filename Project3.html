@@ -1,0 +1,153 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Interaction System (Tutorial) | Project 3</title>
+  <link rel="stylesheet" href="Project3.css" />
+</head>
+<body>
+
+  <!-- Navigation Bar -->
+  <header class="navbar">
+    <div class="name">Malus Cristian Ionut (Cris)</div>
+    <nav class="nav-links">
+      <a href="index.html#about">About</a>
+      <a href="index.html#projects">Projects</a>
+      <a href="index.html#personal">Personal Work</a>
+      <a href="files/CristianMalusResume (2).pdf" download>Resume</a>
+      <a href="index.html#contact">Contact</a>
+    </nav>
+  </header>
+
+  <!-- Main Content -->
+  <div class="content">
+    <div class="project-info-box">
+      <h1>Interaction System (Tutorial)</h1>
+
+      <p><strong>Project Type:</strong> Tutorial Project</p>
+      <p><strong>Software:</strong> Unreal Engine 5</p>
+      <p><strong>Languages:</strong> C++ & Blueprints</p>
+      <p><strong>Primary Role(s):</strong> Gameplay Programmer</p>
+
+      <div class="project-description">
+        <p>
+          This modular interaction system was built to serve as a base for future Unreal projects. It allows players to interact with objects using a clean, expandable framework in both Blueprints and C++. The goal was to keep it accessible while showing how core systems can scale with project needs.
+        </p>
+      </div>
+
+      <!-- Accordion for Preview -->
+      <!-- Accordion for Preview -->
+<div class="accordion">
+    <div class="accordion-item">
+      <button class="accordion-button">🧠 Preview</button>
+      <div class="accordion-content">
+  
+        <!-- GIF Preview -->
+        <div class="gif-preview" style="margin-bottom: 20px;">
+          <img src="Gifs2/Interact.gif" alt="Interaction System Preview" style="max-width: 100%; border-radius: 8px;">
+        </div>
+  
+        <!-- Code Preview -->
+        <div class="code-preview">
+          <h4>InteractionComponent.cpp</h4>
+          <pre><code>
+  // Fill out your copyright notice in the Description page of Project Settings.
+  
+  #include "Components/InteractionComponent.h"
+  #include "Interfaces/ObjectInterface.h"
+  #include "GameFramework/Actor.h"
+  #include "Engine/World.h"
+  #include "DrawDebugHelpers.h"
+  
+  UInteractionComponent::UInteractionComponent()
+  {
+      PrimaryComponentTick.bCanEverTick = true;
+  }
+  
+  void UInteractionComponent::BeginPlay()
+  {
+      Super::BeginPlay();
+  }
+  
+  void UInteractionComponent::TickComponent(float DeltaTime, ELevelTick TickType, FActorComponentTickFunction* ThisTickFunction)
+  {
+      Super::TickComponent(DeltaTime, TickType, ThisTickFunction);
+  }
+  
+  void UInteractionComponent::Interact()
+  {
+      AActor* InteractableActor = GetInteractableActor();
+      if (InteractableActor && InteractableActor->Implements<UObjectInterface>())
+      {
+          IObjectInterface* Interface = Cast<IObjectInterface>(InteractableActor);
+          if (Interface)
+          {
+              Interface->Interact();
+          }
+      }
+  }
+  
+  AActor* UInteractionComponent::GetInteractableActor() const
+  {
+      AActor* Owner = GetOwner();
+      if (!Owner) return nullptr;
+  
+      FVector Start;
+      FRotator CameraRotation;
+      GetOwner()->GetActorEyesViewPoint(Start, CameraRotation);
+      FVector End = Start + (CameraRotation.Vector() * InteractionDistance);
+  
+      FHitResult HitResult;
+      FCollisionQueryParams Params;
+      Params.AddIgnoredActor(GetOwner());
+  
+      if (DrawLine)
+      {
+          DrawDebugLine(GetWorld(), Start, End, FColor::Red, false, 2000.0f);
+      }
+  
+      if (GetWorld()->LineTraceSingleByChannel(HitResult, Start, End, ECC_Visibility, Params))
+      {
+          if (HitResult.GetActor() && HitResult.GetActor()->Implements<UObjectInterface>())
+          {
+              return HitResult.GetActor();
+          }
+      }
+  
+      return nullptr;
+  }
+          </code></pre>
+        </div>
+  
+      </div>
+    </div>
+  </div>
+  
+
+  <!-- Footer -->
+  <footer>
+    <p>&copy; 2025 Malus Cristian Ionut. All rights reserved.</p>
+  </footer>
+
+  <!-- Background -->
+  <script>
+    document.body.style.backgroundImage = "url('pictures/interact.jpg')";
+    document.body.style.backgroundSize = "cover";
+    document.body.style.backgroundPosition = "center";
+    document.body.style.backgroundRepeat = "no-repeat";
+  </script>
+
+  <!-- Accordion Toggle Script -->
+  <script>
+    document.querySelectorAll('.accordion-button').forEach(button => {
+      button.addEventListener('click', () => {
+        const item = button.parentElement;
+        item.classList.toggle('active');
+      });
+    });
+  </script>
+  
+
+</body>
+</html>
