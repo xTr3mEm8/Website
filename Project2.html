@@ -8,6 +8,11 @@
 </head>
 <body>
 
+  <div class="background-container">
+    <div class="background-image" id="bg1"></div>
+    <div class="background-image" id="bg2"></div>
+  </div>
+
   <!-- Navigation Bar -->
   <header class="navbar">
     <div class="name">Malus Cristian Ionut (Cris)</div>
@@ -557,22 +562,39 @@
   </script>
 
 <script>
-    const backgrounds = [
-      'project2/background1.png',
-      'project2/background2.png',
-      'project2/background3.png'
-    ];
-  
-    let index = 0;
-  
-    function cycleBackground() {
-      document.body.style.backgroundImage = `url('${backgrounds[index]}')`;
-      index = (index + 1) % backgrounds.length;
+  const images = [
+    'project2/background1.png',
+    'project2/background2.png',
+    'project2/background3.png'
+  ];
+
+  let index = 0;
+  let showingBg1 = true;
+
+  const bg1 = document.getElementById('bg1');
+  const bg2 = document.getElementById('bg2');
+
+  bg1.style.backgroundImage = `url('${images[0]}')`;
+  bg1.style.opacity = 1;
+
+  setInterval(() => {
+    index = (index + 1) % images.length;
+    const nextImage = images[index];
+
+    if (showingBg1) {
+      bg2.style.backgroundImage = `url('${nextImage}')`;
+      bg2.style.opacity = 1;
+      bg1.style.opacity = 0;
+    } else {
+      bg1.style.backgroundImage = `url('${nextImage}')`;
+      bg1.style.opacity = 1;
+      bg2.style.opacity = 0;
     }
-  
-    cycleBackground(); // Initial set
-    setInterval(cycleBackground, 6000); // Every 6 seconds
-  </script>
+
+    showingBg1 = !showingBg1;
+  }, 6000);
+</script>
+
   
   <script>
     function toggleBlueprints(button) {
