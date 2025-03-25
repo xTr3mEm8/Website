@@ -1,0 +1,170 @@
+/* Reset & Base Styles */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+  }
+  
+  html, body {
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+  }
+  
+  body {
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+    font-family: Arial, sans-serif;
+    scroll-behavior: smooth;
+    color: white;
+    overflow-x: hidden;
+  }
+  
+  /* Navbar */
+  .navbar {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 1rem 2rem;
+    background-color: rgba(0, 0, 0, 0.9);
+    color: white;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    z-index: 1000;
+  }
+  
+  .name {
+    font-size: 1.2rem;
+    font-weight: bold;
+  }
+  
+  .nav-links a {
+    color: white;
+    text-decoration: none;
+    margin-left: 1.5rem;
+    font-weight: bold;
+    transition: color 0.2s ease;
+  }
+  
+  .nav-links a:hover {
+    color: #ff6961;
+  }
+  
+  /* Content Wrapper */
+  .content {
+    flex: 1;
+    padding-top: 150px;
+    text-align: center;
+  }
+  
+  /* Project Info Box */
+  .project-info-box {
+    background-color: rgba(0, 0, 0, 0.6);
+    padding: 30px 40px;
+    margin: 0 auto;
+    max-width: 850px;
+    border-radius: 12px;
+    box-shadow: 0 0 15px rgba(0,0,0,0.4);
+    animation: fadeIn 1s ease;
+  }
+  
+  .project-info-box h1 {
+    margin-bottom: 20px;
+    font-size: 2.2rem;
+    color: #00ffc8;
+  }
+  
+  .project-info-box p {
+    margin: 10px 0;
+    font-size: 1rem;
+    line-height: 1.4;
+  }
+  
+  /* Accordion */
+  .accordion {
+    margin-top: 30px;
+  }
+  
+  .accordion-item {
+    margin-bottom: 15px;
+    border-radius: 8px;
+    overflow: hidden;
+    background-color: rgba(255, 255, 255, 0.05);
+  }
+  
+  .accordion-button {
+    width: 100%;
+    background-color: rgba(0, 0, 0, 0.5);
+    border: none;
+    outline: none;
+    color: #fff;
+    text-align: left;
+    padding: 15px 20px;
+    font-size: 1rem;
+    font-weight: bold;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+    border-radius: 8px 8px 0 0;
+  }
+  
+  .accordion-button:hover {
+    background-color: rgba(255, 255, 255, 0.1);
+  }
+  
+  .accordion-content {
+    max-height: 0;
+    overflow: hidden;
+    transition: max-height 0.4s ease, padding 0.3s ease;
+    padding: 0 20px;
+  }
+  
+  .accordion-item.active .accordion-content {
+    max-height: 1500px; /* adjust if needed */
+    padding: 15px 20px;
+  }
+  
+  /* Footer */
+  footer {
+    text-align: center;
+    padding: 20px;
+    background-color: #111;
+    color: #aaa;
+    font-size: 0.9rem;
+  }
+  
+  /* Utility */
+  .hidden {
+    display: none;
+  }
+  
+  .code-preview {
+    background-color: rgba(0, 0, 0, 0.6);
+    margin-top: 20px;
+    padding: 15px 20px;
+    border-radius: 8px;
+    overflow-x: auto;
+    box-shadow: 0 0 8px rgba(0,0,0,0.3);
+    font-size: 0.85rem;
+    text-align: left;
+  }
+  
+  .code-preview pre {
+    white-space: pre-wrap;
+    color: #00ffcc;
+    font-family: Consolas, monospace;
+  }
+  
+  .code-preview h4 {
+    color: #fff;
+    margin-bottom: 10px;
+  }
+  
+  /* Animation */
+  @keyframes fadeIn {
+    from { opacity: 0; transform: translateY(20px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+  
