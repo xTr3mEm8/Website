@@ -1,0 +1,622 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Souls-like Prototype | Project 2</title>
+  <link rel="stylesheet" href="Project2.css" />
+</head>
+<body>
+
+  <!-- Navigation Bar -->
+  <header class="navbar">
+    <div class="name">Malus Cristian Ionut (Cris)</div>
+    <nav class="nav-links">
+      <a href="index.html#about">About</a>
+      <a href="index.html#projects">Projects</a>
+      <a href="index.html#personal">Personal Work</a>
+      <a href="files/CristianMalusResume (2).pdf" download>Resume</a>
+      <a href="index.html#contact">Contact</a>
+    </nav>
+  </header>
+
+  <!-- Main Content -->
+  <div class="content">
+    <div class="project-info-box">
+      <h1>Souls-like Prototype</h1>
+
+      <p><strong>Project Type:</strong> Personal Project</p>
+      <p><strong>Software:</strong> Unreal Engine 5</p>
+      <p><strong>Languages:</strong> C++ & Blueprints</p>
+      <p><strong>Primary Role(s):</strong> Gameplay Programmer</p>
+
+      <div class="project-description">
+        <p>
+          A Souls-like game made in Unreal Engine with a mixture of Blueprints and C++. This project was focused on learning and building advanced combat systems, AI behavior, and player interaction mechanics such as blocking and stamina management.
+        </p>
+      </div>
+
+      <!-- Video Preview -->
+      <div class="video-container">
+        <iframe 
+          src="https://www.youtube.com/embed/Cb_jME8RBUE" 
+          title="Souls-like Preview"
+          frameborder="0" 
+          allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" 
+          allowfullscreen>
+        </iframe>
+      </div>
+
+      <!-- Accordion Section -->
+      <div class="accordion">
+
+        <div class="accordion-item">
+            <button class="accordion-button">🧠 AI State Machine & Behavior Tree</button>
+            <div class="accordion-content">
+          
+              <p>
+                A behavior tree and state machine system powers enemy decision-making. Enemies patrol, chase, and attack based on the player's location and visibility using AI perception and blackboard keys.
+              </p>
+          
+              <!-- AI State Machine GIF -->
+              <div class="gif-preview">
+                <img src="Gifs/State%20Machine.gif" alt="AI State Machine Preview">
+              </div>
+          
+              <!-- Toggle Preview Button -->
+              <button class="accordion-button blueprint-toggle" onclick="toggleAIContent(this)">🧠 Preview Behavior Tree & Code</button>
+          
+              <!-- Container for both image and code, hidden initially -->
+              <div class="ai-preview hidden">
+                <div class="blueprint-images">
+                  <img src="pictures/Behaviour%20Tree.png" alt="Behavior Tree Blueprint" class="zoomable">
+                </div>
+          
+                <div class="code-preview">
+                  <h4>BTS_PlayerDistance.cpp</h4>
+                  <pre><code>
+          
+          
+          #include "Characters/BTS_PlayerDistance.h"
+          #include "AIController.h"
+          #include "BehaviorTree/BlackboardComponent.h"
+          
+          void UBTS_PlayerDistance::TickNode(UBehaviorTreeComponent& OwnerComp, uint8* NodeMemory, float DeltaSeconds)
+          {
+              FVector CurrentLocation{
+                  OwnerComp.GetAIOwner()->GetPawn()->GetActorLocation()
+              };
+          
+              FVector PlayerLocation{
+                  GetWorld()->GetFirstPlayerController()
+                      ->GetPawn()
+                      ->GetActorLocation()
+              };
+          
+              float Distance{
+                  static_cast<float>(
+                      FVector::Distance(CurrentLocation, PlayerLocation)
+                  )
+              };
+          
+              OwnerComp.GetBlackboardComponent()
+                  ->SetValueAsFloat(TEXT("Distance"), Distance);
+          }
+                  </code></pre>
+                </div>
+              </div>
+          
+            </div>
+          </div>
+          
+          
+
+          <div class="accordion-item">
+            <button class="accordion-button">🛡️ Block Mechanic</button>
+            <div class="accordion-content">
+          
+              <p>
+                Players can block enemy attacks using a stamina-based shield mechanic. If timed right, the block can nullify damage and create an opening for a counterattack.
+              </p>
+          
+              <!-- Block Mechanic GIF -->
+              <div class="gif-preview">
+                <img src="Gifs2/BlockGif.gif" alt="Block Mechanic GIF">
+              </div>
+          
+              <!-- Preview Button -->
+              <button class="accordion-button blueprint-toggle" onclick="toggleBlockContent(this)">🧠 Preview Blueprint & Code</button>
+          
+              <!-- Preview Container (Hidden) -->
+              <div class="block-preview hidden">
+                <div class="blueprint-images">
+                  <img src="pictures/BlockComp.png" alt="Block Component Blueprint" class="zoomable">
+                </div>
+          
+                <div class="code-preview">
+                  <h4>BlockComponent.cpp</h4>
+                  <pre><code>
+          
+          
+          #include "Combat/BlockComponent.h"
+          #include "GameFramework/Character.h"
+          #include "Interfaces/MainPlayer.h"
+          
+          // Sets default values for this component's properties
+          UBlockComponent::UBlockComponent()
+          {
+              PrimaryComponentTick.bCanEverTick = true;
+          }
+          
+          // Called when the game starts
+          void UBlockComponent::BeginPlay()
+          {
+              Super::BeginPlay();
+          }
+          
+          // Called every frame
+          void UBlockComponent::TickComponent(float DeltaTime, ELevelTick TickType, FActorComponentTickFunction* ThisTickFunction)
+          {
+              Super::TickComponent(DeltaTime, TickType, ThisTickFunction);
+          }
+          
+          bool UBlockComponent::Check(AActor* Opponent)
+          {
+              ACharacter* CharacterRef{ GetOwner<ACharacter>() };
+          
+              if (!CharacterRef->Implements<UMainPlayer>()) { return true; }
+          
+              IMainPlayer* PlayerRef{ Cast<IMainPlayer>(CharacterRef) };
+          
+              FVector OpponentForward{ Opponent->GetActorForwardVector() };
+              FVector PlayerForward{ CharacterRef->GetActorForwardVector() };
+          
+              double Result{ FVector::DotProduct(OpponentForward, PlayerForward) };
+          
+              if (Result > 0 || !PlayerRef->HasEnoughStamina(StaminaCost))
+              {
+                  return true;
+              }
+          
+              CharacterRef->PlayAnimMontage(BlockAnimMontage);
+          
+              OnBlockDelegate.Broadcast(StaminaCost);
+              return false;
+          }
+                  </code></pre>
+                </div>
+              </div>
+          
+            </div>
+          </div>
+          
+
+          <div class="accordion-item">
+            <button class="accordion-button">🎯 Lock-On System</button>
+            <div class="accordion-content">
+          
+              <p>
+                A lock-on system allows players to dynamically focus the camera and attacks on nearby enemies. It smoothly updates based on distance and rotation for Souls-like combat control.
+              </p>
+          
+              <!-- Lock-On GIF -->
+              <div class="gif-preview">
+                <img src="Gifs2/LockOnGif.gif" alt="Lock-On System GIF">
+              </div>
+          
+              <!-- Preview Toggle Button -->
+              <button class="accordion-button blueprint-toggle" onclick="toggleLockOnContent(this)">🧠 Preview Blueprint & Code</button>
+          
+              <!-- Hidden Preview Container -->
+              <div class="lockon-preview hidden">
+                <div class="blueprint-images">
+                  <img src="pictures/Lockon.png" alt="Lock-On Blueprint" class="zoomable">
+                </div>
+          
+                <div class="code-preview">
+                  <h4>LockOnComponent.cpp</h4>
+                  <pre><code>
+          
+          
+          #include "Combat/LockOnComponent.h"
+          #include "GameFramework/Character.h"
+          #include "GameFramework/CharacterMovementComponent.h"
+          #include "Kismet/KismetMathLibrary.h"
+          #include "GameFramework/SpringArmComponent.h"
+          #include "Interfaces/Enemy.h"
+          
+          // Sets default values for this component's properties
+          ULockOnComponent::ULockOnComponent()
+          {
+              PrimaryComponentTick.bCanEverTick = true;
+          }
+          
+          // Called when the game starts
+          void ULockOnComponent::BeginPlay()
+          {
+              Super::BeginPlay();
+              OwnerRef = GetOwner<ACharacter>();
+              Controller = GetWorld()->GetFirstPlayerController();
+              MovementComp = OwnerRef->GetCharacterMovement();
+              SpringArmComp = OwnerRef->FindComponentByClass<USpringArmComponent>();
+          }
+          
+          void ULockOnComponent::StartLockOn(float Radius)
+          {
+              FHitResult OutResult;
+              FVector CurrentLocation { OwnerRef->GetActorLocation() };
+              FCollisionShape Sphere{ FCollisionShape::MakeSphere(Radius) };
+              FCollisionQueryParams IgnoreParams{
+                  FName{ TEXT("Ignore Collision Params") }, false, OwnerRef
+              };
+          
+              bool bHasFoundTarget = GetWorld()->SweepSingleByChannel(
+                  OutResult,
+                  CurrentLocation,
+                  CurrentLocation,
+                  FQuat::Identity,
+                  ECC_GameTraceChannel1,
+                  Sphere,
+                  IgnoreParams
+              );
+          
+              if (!bHasFoundTarget || !OutResult.GetActor()->Implements<UEnemy>()) return;
+          
+              CurrentTargetActor = OutResult.GetActor();
+          
+              Controller->SetIgnoreLookInput(true);
+              MovementComp->bOrientRotationToMovement = false;
+              MovementComp->bUseControllerDesiredRotation = true;
+              SpringArmComp->TargetOffset = FVector{ 0.0, 0.0, 100.0 };
+          
+              IEnemy::Execute_OnSelect(CurrentTargetActor);
+              OnUpdatedTargetDelegate.Broadcast(CurrentTargetActor);
+          }
+          
+          void ULockOnComponent::EndLockOn()
+          {
+              IEnemy::Execute_OnDeselect(CurrentTargetActor);
+              CurrentTargetActor = nullptr;
+              MovementComp->bOrientRotationToMovement = true;
+              MovementComp->bUseControllerDesiredRotation = false;
+              SpringArmComp->TargetOffset = FVector{ 0.0, 0.0, 0.0 };
+              Controller->ResetIgnoreLookInput();
+              OnUpdatedTargetDelegate.Broadcast(CurrentTargetActor);
+          }
+          
+          void ULockOnComponent::ToggleLockOn(float Radius)
+          {
+              if (IsValid(CurrentTargetActor)) EndLockOn();
+              else StartLockOn(Radius);
+          }
+          
+          // Called every frame
+          void ULockOnComponent::TickComponent(float DeltaTime, ELevelTick TickType, FActorComponentTickFunction* ThisTickFunction)
+          {
+              Super::TickComponent(DeltaTime, TickType, ThisTickFunction);
+              if (!IsValid(CurrentTargetActor)) return;
+          
+              FVector CurrentLocation = OwnerRef->GetActorLocation();
+              FVector TargetLocation = CurrentTargetActor->GetActorLocation();
+              double TargetDistance = FVector::Distance(CurrentLocation, TargetLocation);
+          
+              if (TargetDistance >= BreakDistance)
+              {
+                  EndLockOn();
+                  return;
+              }
+          
+              TargetLocation.Z -= 125;
+          
+              FRotator NewRotation = UKismetMathLibrary::FindLookAtRotation(CurrentLocation, TargetLocation);
+              Controller->SetControlRotation(NewRotation);
+          }
+                  </code></pre>
+                </div>
+              </div>
+          
+            </div>
+          </div>
+          
+
+          <div class="accordion-item">
+            <button class="accordion-button">❤️ Widgets: Health Bar, Stamina Bar</button>
+            <div class="accordion-content">
+          
+              <p>
+                Custom widgets display player health and stamina in real-time. They update based on combat interactions and regeneration logic, and are positioned dynamically for immersive feedback.
+              </p>
+          
+              <!-- Health/Stamina GIF -->
+              <div class="gif-preview">
+                <img src="Gifs2/HealthStaminaGif.gif" alt="Health and Stamina Widget Preview">
+              </div>
+          
+              <!-- Toggle Preview Button -->
+              <button class="accordion-button blueprint-toggle" onclick="toggleStatsContent(this)">🧠 Preview Blueprint & Code</button>
+          
+              <!-- Hidden Content -->
+              <div class="stats-preview hidden">
+                <div class="blueprint-images">
+                  <img src="pictures/Stats.png" alt="Stats Blueprint" class="zoomable">
+                </div>
+          
+                <div class="code-preview">
+                  <h4>CharacterStatsComponent.cpp</h4>
+                  <pre><code>
+          
+          
+          #include "Characters/CharacterStatsComponent.h"
+          #include "Kismet/KismetMathLibrary.h"
+          #include "Kismet/KismetSystemLibrary.h"
+          #include "Interfaces/Fighter.h"
+          
+          UCharacterStatsComponent::UCharacterStatsComponent()
+          {
+              PrimaryComponentTick.bCanEverTick = true;
+          }
+          
+          void UCharacterStatsComponent::BeginPlay()
+          {
+              Super::BeginPlay();
+          }
+          
+          void UCharacterStatsComponent::TickComponent(float DeltaTime, ELevelTick TickType, FActorComponentTickFunction* ThisTickFunction)
+          {
+              Super::TickComponent(DeltaTime, TickType, ThisTickFunction);
+          }
+          
+          void UCharacterStatsComponent::ReduceHealth(float Amount, AActor* Opponent)
+          {
+              if (Stats[EStat::Health] <= 0) return;
+          
+              IFighter* FighterRef = GetOwner<IFighter>();
+              if (!FighterRef->CanTakeDamage(Opponent)) return;
+          
+              Stats[EStat::Health] -= Amount;
+              Stats[EStat::Health] = UKismetMathLibrary::FClamp(
+                  Stats[EStat::Health],
+                  0,
+                  Stats[EStat::MaxHealth]
+              );
+          
+              OnHealthPercentUpdateDelegate.Broadcast(
+                  GetStatPercentage(EStat::Health, EStat::MaxHealth)
+              );
+          
+              if (Stats[EStat::Health] == 0)
+                  OnZeroHealthDelegate.Broadcast();
+          }
+          
+          void UCharacterStatsComponent::ReduceStamina(float Amount)
+          {
+              Stats[EStat::Stamina] -= Amount;
+              Stats[EStat::Stamina] = UKismetMathLibrary::FClamp(
+                  Stats[EStat::Stamina],
+                  0,
+                  Stats[EStat::MaxStamina]
+              );
+          
+              bCanRegen = false;
+          
+              FLatentActionInfo FunctionInfo{ 0, 100, TEXT("EnableRegen"), this };
+              UKismetSystemLibrary::RetriggerableDelay(
+                  GetWorld(),
+                  StaminaDelayDuration,
+                  FunctionInfo
+              );
+          
+              OnStaminaPercentUpdateDelegate.Broadcast(
+                  GetStatPercentage(EStat::Stamina, EStat::MaxStamina)
+              );
+          }
+          
+          void UCharacterStatsComponent::RegenStamina()
+          {
+              if (!bCanRegen) return;
+          
+              Stats[EStat::Stamina] = UKismetMathLibrary::FInterpTo_Constant(
+                  Stats[EStat::Stamina],
+                  Stats[EStat::MaxStamina],
+                  GetWorld()->DeltaRealTimeSeconds,
+                  StaminaRegenState
+              );
+          
+              OnStaminaPercentUpdateDelegate.Broadcast(
+                  GetStatPercentage(EStat::Stamina, EStat::MaxStamina)
+              );
+          }
+          
+          void UCharacterStatsComponent::EnableRegen()
+          {
+              bCanRegen = true;
+          }
+          
+          float UCharacterStatsComponent::GetStatPercentage(EStat Current, EStat Max)
+          {
+              return Stats[Current] / Stats[Max];
+          }
+                  </code></pre>
+                </div>
+              </div>
+          
+            </div>
+          </div>
+          
+
+          <div class="accordion-item">
+            <button class="accordion-button">⚔️ Combat System</button>
+            <div class="accordion-content">
+          
+              <p>
+                The core combat system includes attacks, stamina usage, combo chaining, and responsive hit detection. It’s designed to feel weighty and tactical using animations, hitboxes, and player input responsiveness.
+              </p>
+          
+              <!-- Combat GIF -->
+              <div class="gif-preview">
+                <img src="Gifs2/Combatgif.gif" alt="Combat System Preview">
+              </div>
+          
+              <!-- Toggle Preview Button -->
+              <button class="accordion-button blueprint-toggle" onclick="toggleCombatContent(this)">🧠 Preview Blueprint & Code</button>
+          
+              <!-- Hidden Preview Container -->
+              <div class="combat-preview hidden">
+                <div class="blueprint-images">
+                  <img src="pictures/Combat.png" alt="Combat Blueprint" class="zoomable">
+                </div>
+          
+                <div class="code-preview">
+                  <h4>CombatComponent.cpp</h4>
+                  <pre><code>
+          
+          
+          #include "Combat/CombatComponent.h"
+          #include "GameFramework/Character.h" 
+          #include "Kismet/KismetMathLibrary.h"
+          #include "Interfaces/MainPlayer.h"
+          
+          // Sets default values for this component's properties
+          UCombatComponent::UCombatComponent()
+          {
+              PrimaryComponentTick.bCanEverTick = true;
+          }
+          
+          // Called when the game starts
+          void UCombatComponent::BeginPlay()
+          {
+              Super::BeginPlay();
+              CharacterRef = GetOwner<ACharacter>();
+          }
+          
+          // Called every frame
+          void UCombatComponent::TickComponent(float DeltaTime, ELevelTick TickType, FActorComponentTickFunction* ThisTickFunction)
+          {
+              Super::TickComponent(DeltaTime, TickType, ThisTickFunction);
+          }
+          
+          void UCombatComponent::ComboAttack()
+          {
+              if (CharacterRef->Implements<UMainPlayer>())
+              {
+                  IMainPlayer* IPlayerRef = Cast<IMainPlayer>(CharacterRef);
+                  if (IPlayerRef && !IPlayerRef->HasEnoughStamina(StaminaCost))
+                  {
+                      return;
+                  }
+              }
+          
+              if (!bCanAttack) return;
+          
+              bCanAttack = false;
+              CharacterRef->PlayAnimMontage(AttackAnimations[ComboCounter]);
+          
+              ComboCounter++;
+          
+              int MaxCombo = AttackAnimations.Num();
+              ComboCounter = UKismetMathLibrary::Wrap(ComboCounter, -1, MaxCombo - 1);
+          
+              OnAttackPerformedDelegate.Broadcast(StaminaCost);
+          }
+          
+          void UCombatComponent::HandleResetAttack()
+          {
+              bCanAttack = true;
+          }
+          
+          void UCombatComponent::RandomAttack()
+          {
+              int RandomIndex = FMath::RandRange(0, AttackAnimations.Num() - 1);
+              AnimDuration = CharacterRef->PlayAnimMontage(AttackAnimations[RandomIndex]);
+          }
+                  </code></pre>
+                </div>
+              </div>
+          
+            </div>
+          </div>
+          
+
+      </div>
+    </div>
+  </div>
+
+  <!-- Footer -->
+  <footer>
+    <p>&copy; 2025 Malus Cristian Ionut. All rights reserved.</p>
+  </footer>
+
+  <!-- Accordion Toggle Script -->
+  <script>
+    document.querySelectorAll('.accordion-button').forEach(button => {
+      button.addEventListener('click', () => {
+        const item = button.parentElement;
+        item.classList.toggle('active');
+      });
+    });
+  </script>
+
+<script>
+    const backgrounds = [
+      'project2/background1.png',
+      'project2/background2.png',
+      'project2/background3.png'
+    ];
+  
+    let index = 0;
+  
+    function cycleBackground() {
+      document.body.style.backgroundImage = `url('${backgrounds[index]}')`;
+      index = (index + 1) % backgrounds.length;
+    }
+  
+    cycleBackground(); // Initial set
+    setInterval(cycleBackground, 6000); // Every 6 seconds
+  </script>
+  
+  <script>
+    function toggleBlueprints(button) {
+      const container = button.nextElementSibling;
+      container.classList.toggle('hidden');
+    }
+  </script>
+  
+  <script>
+    function toggleAIContent(button) {
+      const previewContainer = button.nextElementSibling;
+      previewContainer.classList.toggle('hidden');
+    }
+  </script>
+  
+  <script>
+    function toggleBlockContent(button) {
+      const previewContainer = button.nextElementSibling;
+      previewContainer.classList.toggle('hidden');
+    }
+  </script>
+
+<script>
+    function toggleLockOnContent(button) {
+      const previewContainer = button.nextElementSibling;
+      previewContainer.classList.toggle('hidden');
+    }
+  </script>
+  
+  <script>
+    function toggleStatsContent(button) {
+      const previewContainer = button.nextElementSibling;
+      previewContainer.classList.toggle('hidden');
+    }
+  </script>
+  
+  
+  <script>
+    function toggleCombatContent(button) {
+      const previewContainer = button.nextElementSibling;
+      previewContainer.classList.toggle('hidden');
+    }
+  </script>
+
+
+</body>
+</html>
