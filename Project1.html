@@ -57,7 +57,8 @@
           <button class="accordion-button">🏗️ Building System</button>
           <div class="accordion-content">
             <p>
-              I developed a modular building system designed to give players the flexibility to construct structures in both a grid-based and free-form environment...
+              I developed a modular building system designed to give players the flexibility to construct structures in both a grid-based and free-form environment. This system supports the dynamic placement, rotation, and snapping of modular building components such as walls, floors, ceilings, windows, and doors. It adapts to terrain slope, validates placement based on collisions, and ensures the player can’t build through or inside restricted geometry.
+The system uses trace checks and blueprint logic to evaluate placement conditions in real-time, providing visual feedback (such as ghost meshes) showing where a  structure can be placed. It also supports stacking logic, ensuring structural hierarchy (e.g., you can't place a roof without walls).
             </p>
             <div class="gif-preview">
               <img src="Gifs/basebuilding.gif" alt="Base Building Preview">
@@ -74,7 +75,7 @@
           <button class="accordion-button">📦 Inventory System</button>
           <div class="accordion-content">
             <p>
-              The Inventory System is a core part of the gameplay that allows players to collect, store, and manage items...
+              The Inventory System is a core part of the gameplay that allows players to collect, store, and manage items. It supports picking up objects, opening and closing the inventory UI, and managing item slots dynamically through Blueprints.
             </p>
             <div class="gif-preview">
               <img src="Gifs/inventory.gif" alt="Inventory System Preview">
@@ -91,7 +92,7 @@
           <button class="accordion-button">❤️ Player Damage & Health System</button>
           <div class="accordion-content">
             <p>
-              I implemented a simple yet expandable Health and Damage system entirely in Blueprints...
+              I implemented a simple yet expandable Health and Damage system entirely in Blueprints. The system tracks the player’s current and maximum health, applies damage from enemies or the environment, and triggers a death state when health reaches zero. It also supports healing, UI updates, and can be easily connected with stats or armor systems for future complexity.
             </p>
             <div class="gif-preview">
               <img src="Gifs/Health%20system.gif" alt="Health System Preview">
@@ -108,7 +109,7 @@
           <button class="accordion-button">🛠️ Lessons Learned</button>
           <div class="accordion-content">
             <p>
-              Throughout the development of this project, I gained a deeper understanding of Unreal Engine's Blueprint system...
+              Throughout the development of this project, I gained a deeper understanding of Unreal Engine's Blueprint system and how to structure gameplay logic in a modular and scalable way. I learned the importance of planning out systems like inventory and building tools before jumping into implementation, as well as how small features like UI feedback and animation blending significantly improve player experience. Working solo pushed me to wear many hats—from programming to design and debugging—which gave me a better appreciation for the game development pipeline. Most importantly, I learned how to break down complex systems into manageable parts and iterate effectively based on testing.
             </p>
           </div>
         </div>
