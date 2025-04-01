@@ -1,0 +1,159 @@
+/* Reset & Base Styles */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+  }
+  
+  html, body {
+    height: 100%;
+    font-family: Arial, sans-serif;
+    background-color: #1e1e1e;
+    color: white;
+    scroll-behavior: smooth;
+    overflow-x: hidden;
+  }
+  
+  /* Navbar */
+  .navbar {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 1rem 2rem;
+    background-color: rgba(0, 0, 0, 0.9);
+    color: white;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    z-index: 1000;
+  }
+  
+  .name {
+    font-size: 1.2rem;
+    font-weight: bold;
+  }
+  
+  .nav-links a {
+    color: white;
+    text-decoration: none;
+    margin-left: 1.5rem;
+    font-weight: bold;
+    transition: color 0.2s ease;
+  }
+  
+  .nav-links a:hover {
+    color: #ff6961;
+  }
+  
+  /* Main Content */
+  .content {
+    padding-top: 120px;
+    padding-bottom: 80px;
+    text-align: center;
+  }
+  
+  .project-info-box {
+    background-color: rgba(0, 0, 0, 0.6);
+    padding: 30px 40px;
+    margin: 0 auto;
+    max-width: 850px;
+    border-radius: 12px;
+    box-shadow: 0 0 15px rgba(0,0,0,0.4);
+  }
+  
+  .project-info-box h1 {
+    margin-bottom: 20px;
+    font-size: 2.2rem;
+    color: #00ffc8;
+  }
+  
+  .project-info-box p {
+    margin: 10px 0;
+    font-size: 1rem;
+    line-height: 1.4;
+  }
+  
+  .project-description {
+    margin-top: 20px;
+    text-align: left;
+  }
+  
+  .preview-button {
+    padding: 10px 20px;
+    background-color: #8e44ad;
+    color: white;
+    text-decoration: none;
+    border-radius: 6px;
+    font-weight: bold;
+    transition: background-color 0.3s ease;
+    display: inline-block;
+  }
+  
+  .preview-button:hover {
+    background-color: #a29bfe;
+  }
+  
+  /* Footer */
+  footer {
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    background-color: #111;
+    color: #aaa;
+    font-size: 0.9rem;
+    text-align: center;
+    padding: 15px;
+    z-index: 999;
+  }
+  
+  body {
+    background-image: url("pictures/cs50game.png");
+    background-size: cover;
+    background-position: center;
+    background-attachment: fixed;
+    background-repeat: no-repeat;
+  }
+  
+  .background-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.5);
+    z-index: -1;
+  }
+  
+  .background-wrapper {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: -20;
+    overflow: hidden;
+  }
+  
+  .bg-image {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    background-size: cover;
+    background-position: center;
+    opacity: 0;
+    transition: opacity 1.5s ease-in-out;
+  }
+  
+  #bg1 {
+    background-image: url("pictures/cs50game.png");
+    opacity: 1;
+    z-index: -10;
+  }
+  
+  #bg2 {
+    background-image: url("pictures/FlappyBirds.png");
+    z-index: -11;
+  }
+  

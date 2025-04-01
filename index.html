@@ -99,6 +99,35 @@
           </ul>
         </div>
 
+        <div class="project-card">
+          <a href="Project4.html">
+            <div class="image-wrapper">
+              <img src="pictures/cs50game.png" alt="CS50 Game Development Preview">
+              <div class="overlay-title">Harvard Intro to Game Dev</div>
+            </div>
+          </a>
+        
+          <div class="tags">
+            <span class="tag">#Unity</span>
+            <span class="tag">#Lua</span>
+            <span class="tag">#University</span>
+          </div>
+        
+          <p class="description">A course offered by Harvard where we explore game development at first with LUA then with C# in Unity.</p>
+        
+          <p><strong>My Contributions:</strong></p>
+          <ul class="contributions">
+            <li>Each project required a specific feature to be added on an already given code base — basically mod the game to add this feature.</li>
+          </ul>
+        
+          <div style="margin-top: 15px;">
+            <a href="files/CS50G.pdf" download class="preview-button">📄 Download Certificate</a>
+          </div>
+        </div>
+        
+        
+        
+
         <!-- Interaction System (Tutorial) Card -->
 <div class="project-card">
   <a href="project3.html">
@@ -190,5 +219,25 @@
     });
   </script>
 
+<script>
+  function openCertificate() {
+    document.getElementById("certificateModal").style.display = "block";
+  }
+
+  function closeCertificate() {
+    document.getElementById("certificateModal").style.display = "none";
+  }
+
+  window.onclick = function(event) {
+    const modal = document.getElementById("certificateModal");
+    if (event.target === modal) {
+      modal.style.display = "none";
+    }
+  }
+</script>
+
+
+  
+</div>
 </body>
 </html>

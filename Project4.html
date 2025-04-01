@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Harvard CS50 Game Dev | Project 4</title>
+  <link rel="stylesheet" href="Project4.css" />
+</head>
+<body>
+
+    <div class="background-wrapper">
+        <div class="bg-image" id="bg1"></div>
+        <div class="bg-image" id="bg2"></div>
+      </div>
+      
+
+  <!-- Navigation Bar -->
+  <header class="navbar">
+    <div class="name">Malus Cristian Ionut (Cris)</div>
+    <nav class="nav-links">
+      <a href="index.html#about">About</a>
+      <a href="index.html#projects">Projects</a>
+      <a href="index.html#personal">Personal Work</a>
+      <a href="files/CristianMalusResume (2).pdf" download>Resume</a>
+      <a href="index.html#contact">Contact</a>
+    </nav>
+  </header>
+
+  <!-- Main Content -->
+  <div class="content">
+    <div class="project-info-box">
+      <h1>Harvard CS50 Game Development</h1>
+      <p><strong>Project Type:</strong> University Course</p>
+      <p><strong>Languages:</strong> Lua & C#</p>
+      <p><strong>Tools:</strong> Unity, Love2D</p>
+      <p><strong>My Role:</strong> Feature Implementation & Game Scripting</p>
+
+      <div class="project-description">
+        <p>
+          This project was part of Harvard’s Introduction to Game Development course (CS50). Each assignment involved modifying a base game to implement new features, mechanics, or systems using Lua or C#. The course covered classic genres and game architecture, providing strong foundations for game development.
+        </p>
+      </div>
+
+      <h2 style="margin-top: 30px; font-size: 1.3rem; color: #00ffc8;">
+        If you want to check the videos out, please click the link below:
+      </h2>
+
+      <div style="margin-top: 15px;">
+        <a 
+          href="https://www.youtube.com/watch?v=rbKVEbena0s&list=PLCuQlNwaqH6VEkjm8QHpthL2kWzacf-Vn&index=12&ab_channel=xTr3mE" 
+          target="_blank" 
+          class="preview-button"
+        >
+          ▶️ Watch Videos Here
+        </a>
+      </div>
+
+      <div style="margin-top: 20px;">
+        <a href="files/CS50G.pdf" download class="preview-button">📄 Download Certificate</a>
+      </div>
+    </div>
+  </div>
+
+  <!-- Footer -->
+  <footer>
+    <p>&copy; 2025 Malus Cristian Ionut. All rights reserved.</p>
+  </footer>
+
+
+  <script>
+    setTimeout(() => {
+      document.getElementById("bg2").style.opacity = "1";
+      document.getElementById("bg1").style.opacity = "0";
+    }, 1000); // switch after 8 seconds
+  </script>
+  
+</body>
+</html>
